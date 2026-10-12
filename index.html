@@ -1,0 +1,1281 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NOTE | Knowledge Library</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #2563eb;
+    --dark: #172033;
+    --muted: #64748b;
+    --border: #e5e7eb;
+    --background: #f8fafc;
+    --white: #ffffff;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--dark);
+    line-height: 1.7;
+}
+
+button, input, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+header {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar {
+    max-width: 1150px;
+    margin: auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.brand h1 {
+    font-size: 25px;
+    letter-spacing: 1px;
+}
+
+.brand p {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.primary {
+    background: var(--primary);
+    color: white;
+}
+
+.secondary {
+    background: #eef2ff;
+    color: #1d4ed8;
+}
+
+.danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.gray {
+    background: #f1f5f9;
+    color: #334155;
+}
+
+.container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+.hero {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 38px 25px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.hero h2 {
+    font-size: clamp(27px, 4vw, 39px);
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: var(--muted);
+}
+
+.search-box {
+    width: 100%;
+    max-width: 500px;
+    padding: 13px 16px;
+    margin-top: 23px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    outline: none;
+}
+
+.search-box:focus,
+input:focus,
+textarea:focus {
+    border-color: var(--primary);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.section-title h2 {
+    font-size: 23px;
+}
+
+.chapter-count {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.chapter-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.chapter-heading {
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.chapter-heading h3 {
+    font-size: 17px;
+    overflow-wrap: anywhere;
+}
+
+.chapter-number {
+    color: var(--primary);
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.chapter-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.small-btn {
+    border: none;
+    border-radius: 7px;
+    padding: 7px 11px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.read-btn {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.chapter-content {
+    display: none;
+    padding: 22px;
+    border-top: 1px solid var(--border);
+    background: white;
+}
+
+.chapter-content.open {
+    display: block;
+}
+
+.chapter-text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.9;
+    font-size: 16px;
+}
+
+.chapter-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
+    margin: 20px auto;
+    border-radius: 8px;
+}
+
+.chapter-files {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.file-link {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    text-decoration: none;
+    padding: 10px 13px;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+
+.admin-actions {
+    display: none;
+    gap: 8px;
+}
+
+.admin-on .admin-actions {
+    display: flex;
+}
+
+.empty {
+    background: white;
+    padding: 45px 20px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    text-align: center;
+    color: var(--muted);
+}
+
+footer {
+    text-align: center;
+    padding: 30px 15px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    z-index: 100;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 650px;
+    max-height: 92vh;
+    overflow-y: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+}
+
+.modal-box h2 {
+    margin-bottom: 18px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+}
+
+.form-group textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.help {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.file-preview {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        padding: 12px;
+    }
+
+    .brand h1 {
+        font-size: 21px;
+    }
+
+    .container {
+        padding: 20px 12px;
+    }
+
+    .hero {
+        padding: 28px 15px;
+    }
+
+    .chapter-heading {
+        padding: 13px;
+        align-items: flex-start;
+    }
+
+    .chapter-heading h3 {
+        font-size: 15px;
+    }
+
+    .chapter-actions {
+        flex-direction: column;
+    }
+
+    .chapter-content {
+        padding: 15px;
+    }
+
+    .btn {
+        padding: 9px 11px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="navbar">
+        <div class="brand">
+            <img id="headerLogo" alt="Website logo" hidden>
+            <div>
+                <h1 id="siteName">NOTE</h1>
+                <p>Knowledge • Learning • Growth</p>
+            </div>
+        </div>
+
+        <div id="headerButtons">
+            <button class="btn primary" onclick="openLogin()">
+                Admin Login
+            </button>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <h2>Explore Your Knowledge</h2>
+        <p>Read chapters, learn new things, and grow every day.</p>
+
+        <input
+            type="search"
+            id="searchInput"
+            class="search-box"
+            placeholder="Search chapters..."
+            oninput="renderChapters()"
+            aria-label="Search chapters">
+    </section>
+
+    <section>
+        <div class="section-title">
+            <h2>All Chapters</h2>
+            <span id="chapterCount" class="chapter-count">0 Chapters</span>
+        </div>
+
+        <div id="chapterList" class="chapter-list"></div>
+    </section>
+
+</main>
+
+<footer>
+    <p>© <span id="year"></span> NOTE. All rights reserved.</p>
+    <p>Learn something new every day.</p>
+</footer>
+
+<!-- LOGIN MODAL -->
+
+<div class="modal" id="loginModal">
+    <div class="modal-box" style="max-width:400px">
+        <h2>Admin Login</h2>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <input
+                    type="password"
+                    id="adminPassword"
+                    placeholder="Enter admin password"
+                    required>
+            </div>
+
+            <p id="loginError"
+               style="color:#dc2626;margin-bottom:12px"></p>
+
+            <div class="modal-actions">
+                <button type="button"
+                        class="btn gray"
+                        onclick="closeModal('loginModal')">
+                    Cancel
+                </button>
+
+                <button type="submit" class="btn primary">
+                    Login
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- CHAPTER EDITOR -->
+
+<div class="modal" id="editorModal">
+    <div class="modal-box">
+        <h2 id="editorTitle">Add New Chapter</h2>
+
+        <form id="chapterForm">
+
+            <div class="form-group">
+                <label for="chapterTitle">Chapter Heading *</label>
+                <input
+                    id="chapterTitle"
+                    maxlength="200"
+                    placeholder="Enter chapter heading"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="chapterText">Chapter Content</label>
+                <textarea
+                    id="chapterText"
+                    placeholder="Write your chapter here..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="chapterImage">Upload Image (optional)</label>
+                <input
+                    type="file"
+                    id="chapterImage"
+                    accept="image/*">
+
+                <div id="imagePreview" class="file-preview"></div>
+
+                <button
+                    type="button"
+                    class="small-btn danger"
+                    id="removeImageBtn"
+                    onclick="removeExistingImage()"
+                    hidden>
+                    Remove Image
+                </button>
+
+                <span class="help">
+                    For this browser-only demo, images are stored locally.
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="chapterPdf">Upload PDF (optional)</label>
+                <input
+                    type="file"
+                    id="chapterPdf"
+                    accept="application/pdf">
+
+                <div id="pdfPreview" class="file-preview"></div>
+
+                <button
+                    type="button"
+                    class="small-btn danger"
+                    id="removePdfBtn"
+                    onclick="removeExistingPdf()"
+                    hidden>
+                    Remove PDF
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label for="chapterLinks">External Links (optional)</label>
+                <textarea
+                    id="chapterLinks"
+                    style="min-height:90px"
+                    placeholder="Example: PDF Notes | https://example.com/notes.pdf
+Website | https://example.com"></textarea>
+
+                <span class="help">
+                    Add one link per line. Format: Link Name | URL
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="chapterPdfUrl">PDF URL (optional)</label>
+                <input
+                    type="url"
+                    id="chapterPdfUrl"
+                    placeholder="https://example.com/document.pdf">
+            </div>
+
+            <div class="modal-actions">
+                <button
+                    type="button"
+                    class="btn gray"
+                    onclick="closeModal('editorModal')">
+                    Cancel
+                </button>
+
+                <button type="submit" class="btn primary">
+                    Save Chapter
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- WEBSITE SETTINGS -->
+
+<div class="modal" id="settingsModal">
+    <div class="modal-box">
+        <h2>Website Settings</h2>
+
+        <div class="form-group">
+            <label for="siteNameInput">Website Name</label>
+            <input id="siteNameInput" maxlength="60" value="NOTE">
+        </div>
+
+        <div class="form-group">
+            <label for="logoInput">Upload Website Logo</label>
+            <input type="file" id="logoInput" accept="image/*">
+            <div id="logoPreview" class="file-preview"></div>
+        </div>
+
+        <div class="modal-actions">
+            <button
+                class="btn gray"
+                onclick="closeModal('settingsModal')">
+                Cancel
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="saveSettings()">
+                Save Settings
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+"use strict";
+
+/*
+  BROWSER-ONLY DEMO.
+
+  IMPORTANT:
+  The password below is visible in source code.
+  Do not use this login as real security on a public website.
+
+  Use server-side authentication and a database before deployment.
+*/
+
+const DEMO_ADMIN_PASSWORD = "7607433511";
+
+const CHAPTERS_KEY = "note_website_chapters_v1";
+const SETTINGS_KEY = "note_website_settings_v1";
+
+let isAdmin = false;
+let editingId = null;
+let currentImage = "";
+let currentPdf = "";
+let removeImage = false;
+let removePdf = false;
+let logoData = "";
+
+let chapters = loadJSON(CHAPTERS_KEY, []);
+let settings = loadJSON(SETTINGS_KEY, {
+    name: "NOTE",
+    logo: ""
+});
+
+function loadJSON(key, fallback) {
+    try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+    } catch (error) {
+        console.error("Could not load saved data:", error);
+        return fallback;
+    }
+}
+
+function saveChapters() {
+    try {
+        localStorage.setItem(CHAPTERS_KEY, JSON.stringify(chapters));
+        return true;
+    } catch (error) {
+        alert(
+            "Storage is full or unavailable. Please use smaller files. " +
+            "For reliable image and PDF storage, connect a backend."
+        );
+        return false;
+    }
+}
+
+function saveSettingsData() {
+    try {
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+        return true;
+    } catch (error) {
+        alert("Settings could not be saved. Try a smaller logo.");
+        return false;
+    }
+}
+
+function makeId() {
+    return Date.now().toString(36) +
+        Math.random().toString(36).slice(2, 10);
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function safeURL(value) {
+    try {
+        const url = new URL(value);
+        if (url.protocol === "http:" || url.protocol === "https:") {
+            return url.href;
+        }
+    } catch (_) {}
+    return "";
+}
+
+function safeFileURL(value) {
+    if (typeof value === "string" &&
+        value.startsWith("data:application/pdf;base64,")) {
+        return value;
+    }
+    return safeURL(value);
+}
+
+function openLogin() {
+    document.getElementById("loginError").textContent = "";
+    document.getElementById("adminPassword").value = "";
+    openModal("loginModal");
+}
+
+function openModal(id) {
+    document.getElementById(id).classList.add("show");
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove("show");
+}
+
+document.querySelectorAll(".modal").forEach(modal => {
+    modal.addEventListener("click", event => {
+        if (event.target === modal) {
+            modal.classList.remove("show");
+        }
+    });
+});
+
+document.getElementById("loginForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const password = document.getElementById("adminPassword").value;
+
+    if (password === DEMO_ADMIN_PASSWORD) {
+        isAdmin = true;
+        closeModal("loginModal");
+        updateHeader();
+        renderChapters();
+        alert("Admin login successful!");
+    } else {
+        document.getElementById("loginError").textContent =
+            "Incorrect password. Please try again.";
+    }
+});
+
+function logout() {
+    isAdmin = false;
+    updateHeader();
+    renderChapters();
+    alert("You have logged out. Saved chapters remain in this browser.");
+}
+
+function updateHeader() {
+    const buttons = document.getElementById("headerButtons");
+
+    if (isAdmin) {
+        document.body.classList.add("admin-on");
+
+        buttons.innerHTML = `
+            <button class="btn primary" onclick="openEditor()">
+                + Add Chapter
+            </button>
+            <button class="btn secondary" onclick="openSettings()">
+                Settings
+            </button>
+            <button class="btn gray" onclick="logout()">
+                Logout
+            </button>
+        `;
+    } else {
+        document.body.classList.remove("admin-on");
+
+        buttons.innerHTML = `
+            <button class="btn primary" onclick="openLogin()">
+                Admin Login
+            </button>
+        `;
+    }
+}
+
+function applySettings() {
+    const name = settings.name || "NOTE";
+
+    document.getElementById("siteName").textContent = name;
+    document.title = name + " | Knowledge Library";
+
+    const logo = document.getElementById("headerLogo");
+
+    if (settings.logo) {
+        logo.src = settings.logo;
+        logo.hidden = false;
+    } else {
+        logo.removeAttribute("src");
+        logo.hidden = true;
+    }
+}
+
+function renderChapters() {
+    const list = document.getElementById("chapterList");
+    const search = document.getElementById("searchInput")
+        .value.toLowerCase().trim();
+
+    const filtered = chapters.filter(chapter =>
+        (chapter.title || "").toLowerCase().includes(search)
+    );
+
+    document.getElementById("chapterCount").textContent =
+        filtered.length + (filtered.length === 1 ? " Chapter" : " Chapters");
+
+    if (filtered.length === 0) {
+        list.innerHTML = `
+            <div class="empty">
+                <h3>No chapters found</h3>
+                <p>Try another search or add a new chapter.</p>
+            </div>
+        `;
+        return;
+    }
+
+    list.innerHTML = filtered.map((chapter, index) => {
+        const image = chapter.image &&
+            chapter.image.startsWith("data:image/")
+            ? `<img class="chapter-image"
+                    src="${chapter.image}"
+                    alt="${escapeHTML(chapter.title)}">`
+            : "";
+
+        let files = "";
+
+        if (chapter.pdf) {
+            const pdfURL = safeFileURL(chapter.pdf);
+
+            if (pdfURL) {
+                files += `
+                    <a class="file-link"
+                       href="${pdfURL}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        📄 Open PDF
+                    </a>
+                `;
+            }
+        }
+
+        if (chapter.pdfUrl) {
+            const url = safeURL(chapter.pdfUrl);
+
+            if (url) {
+                files += `
+                    <a class="file-link"
+                       href="${escapeHTML(url)}"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        📑 View PDF Link
+                    </a>
+                `;
+            }
+        }
+
+        if (Array.isArray(chapter.links)) {
+            chapter.links.forEach(item => {
+                const url = safeURL(item.url);
+
+                if (url) {
+                    files += `
+                        <a class="file-link"
+                           href="${escapeHTML(url)}"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            🔗 ${escapeHTML(item.name || "Open Link")}
+                        </a>
+                    `;
+                }
+            });
+        }
+
+        return `
+            <article class="chapter-card">
+                <div class="chapter-heading">
+                    <h3>
+                        <span class="chapter-number">
+                            ${String(index + 1).padStart(2, "0")}.
+                        </span>
+                        ${escapeHTML(chapter.title)}
+                    </h3>
+
+                    <div class="chapter-actions">
+                        <button
+                            class="small-btn read-btn"
+                            onclick="toggleChapter('${chapter.id}')">
+                            Read
+                        </button>
+
+                        <div class="admin-actions">
+                            <button
+                                class="small-btn secondary"
+                                onclick="editChapter('${chapter.id}')">
+                                Edit
+                            </button>
+
+                            <button
+                                class="small-btn danger"
+                                onclick="deleteChapter('${chapter.id}')">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-content" id="content-${chapter.id}">
+                    <div class="chapter-text">${escapeHTML(chapter.text || "")}</div>
+                    ${image}
+                    ${files ? `<div class="chapter-files">${files}</div>` : ""}
+                </div>
+            </article>
+        `;
+    }).join("");
+}
+
+function toggleChapter(id) {
+    const content = document.getElementById("content-" + id);
+
+    if (content) {
+        content.classList.toggle("open");
+    }
+}
+
+function resetEditor() {
+    editingId = null;
+    currentImage = "";
+    currentPdf = "";
+    removeImage = false;
+    removePdf = false;
+
+    document.getElementById("chapterForm").reset();
+    document.getElementById("editorTitle").textContent = "Add New Chapter";
+    document.getElementById("imagePreview").textContent = "";
+    document.getElementById("pdfPreview").textContent = "";
+    document.getElementById("removeImageBtn").hidden = true;
+    document.getElementById("removePdfBtn").hidden = true;
+}
+
+function openEditor() {
+    if (!isAdmin) return;
+
+    resetEditor();
+    openModal("editorModal");
+}
+
+function editChapter(id) {
+    if (!isAdmin) return;
+
+    const chapter = chapters.find(item => item.id === id);
+    if (!chapter) return;
+
+    resetEditor();
+    editingId = id;
+
+    document.getElementById("editorTitle").textContent = "Edit Chapter";
+    document.getElementById("chapterTitle").value = chapter.title || "";
+    document.getElementById("chapterText").value = chapter.text || "";
+    document.getElementById("chapterLinks").value =
+        (chapter.links || [])
+        .map(item => `${item.name} | ${item.url}`)
+        .join("\n");
+
+    document.getElementById("chapterPdfUrl").value =
+        chapter.pdfUrl || "";
+
+    currentImage = chapter.image || "";
+    currentPdf = chapter.pdf || "";
+
+    if (currentImage) {
+        document.getElementById("imagePreview").textContent =
+            "Existing image saved. Upload another image to replace it.";
+        document.getElementById("removeImageBtn").hidden = false;
+    }
+
+    if (currentPdf) {
+        document.getElementById("pdfPreview").textContent =
+            "Existing PDF saved. Upload another PDF to replace it.";
+        document.getElementById("removePdfBtn").hidden = false;
+    }
+
+    openModal("editorModal");
+}
+
+function removeExistingImage() {
+    currentImage = "";
+    removeImage = true;
+    document.getElementById("chapterImage").value = "";
+    document.getElementById("imagePreview").textContent =
+        "Image will be removed when you save.";
+    document.getElementById("removeImageBtn").hidden = true;
+}
+
+function removeExistingPdf() {
+    currentPdf = "";
+    removePdf = true;
+    document.getElementById("chapterPdf").value = "";
+    document.getElementById("pdfPreview").textContent =
+        "PDF will be removed when you save.";
+    document.getElementById("removePdfBtn").hidden = true;
+}
+
+function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("File could not be read."));
+
+        reader.readAsDataURL(file);
+    });
+}
+
+document.getElementById("chapterImage").addEventListener("change", event => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please choose a valid image.");
+        event.target.value = "";
+        return;
+    }
+
+    // Keep the browser-only demo within a practical storage limit.
+    if (file.size > 1.5 * 1024 * 1024) {
+        alert("Please choose an image smaller than 1.5 MB.");
+        event.target.value = "";
+        return;
+    }
+
+    document.getElementById("imagePreview").textContent =
+        "Selected: " + file.name;
+});
+
+document.getElementById("chapterPdf").addEventListener("change", event => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+        alert("Please choose a PDF file.");
+        event.target.value = "";
+        return;
+    }
+
+    if (file.size > 1.5 * 1024 * 1024) {
+        alert("Please choose a PDF smaller than 1.5 MB.");
+        event.target.value = "";
+        return;
+    }
+
+    document.getElementById("pdfPreview").textContent =
+        "Selected: " + file.name;
+});
+
+function parseLinks(text) {
+    const result = [];
+
+    text.split("\n").forEach(line => {
+        const trimmed = line.trim();
+        if (!trimmed) return;
+
+        const separator = trimmed.indexOf("|");
+
+        let name = "Open Link";
+        let url = trimmed;
+
+        if (separator !== -1) {
+            name = trimmed.slice(0, separator).trim() || "Open Link";
+            url = trimmed.slice(separator + 1).trim();
+        }
+
+        if (safeURL(url)) {
+            result.push({ name, url });
+        }
+    });
+
+    return result;
+}
+
+document.getElementById("chapterForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!isAdmin) {
+        alert("Please log in as admin first.");
+        return;
+    }
+
+    const title = document.getElementById("chapterTitle").value.trim();
+
+    if (!title) {
+        alert("Please enter a chapter heading.");
+        return;
+    }
+
+    const imageFile = document.getElementById("chapterImage").files[0];
+    const pdfFile = document.getElementById("chapterPdf").files[0];
+
+    try {
+        let image = removeImage ? "" : currentImage;
+        let pdf = removePdf ? "" : currentPdf;
+
+        if (imageFile) {
+            image = await readFileAsDataURL(imageFile);
+        }
+
+        if (pdfFile) {
+            pdf = await readFileAsDataURL(pdfFile);
+        }
+
+        const chapterData = {
+            id: editingId || makeId(),
+            title,
+            text: document.getElementById("chapterText").value,
+            image,
+            pdf,
+            pdfUrl: document.getElementById("chapterPdfUrl").value.trim(),
+            links: parseLinks(
+                document.getElementById("chapterLinks").value
+            ),
+            updatedAt: new Date().toISOString()
+        };
+
+        const previous = chapters;
+
+        if (editingId) {
+            chapters = chapters.map(item =>
+                item.id === editingId ? chapterData : item
+            );
+        } else {
+            chapters.unshift(chapterData);
+        }
+
+        if (!saveChapters()) {
+            chapters = previous;
+            return;
+        }
+
+        closeModal("editorModal");
+        renderChapters();
+
+        alert(editingId ? "Chapter updated successfully!" :
+            "Chapter added successfully!");
+
+    } catch (error) {
+        alert("Could not save the chapter. Please try again.");
+        console.error(error);
+    }
+});
+
+function deleteChapter(id) {
+    if (!isAdmin) return;
+
+    const chapter = chapters.find(item => item.id === id);
+    if (!chapter) return;
+
+    if (!confirm(`Delete chapter "${chapter.title}"? This cannot be undone.`)) {
+        return;
+    }
+
+    const previous = chapters;
+    chapters = chapters.filter(item => item.id !== id);
+
+    if (!saveChapters()) {
+        chapters = previous;
+        return;
+    }
+
+    renderChapters();
+}
+
+function openSettings() {
+    if (!isAdmin) return;
+
+    document.getElementById("siteNameInput").value = settings.name || "NOTE";
+    document.getElementById("logoInput").value = "";
+    document.getElementById("logoPreview").textContent =
+        settings.logo ? "A logo is currently saved." : "No logo uploaded.";
+
+    logoData = settings.logo || "";
+
+    openModal("settingsModal");
+}
+
+document.getElementById("logoInput").addEventListener("change", event => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please choose a valid logo image.");
+        event.target.value = "";
+        return;
+    }
+
+    if (file.size > 500 * 1024) {
+        alert("Please choose a logo smaller than 500 KB.");
+        event.target.value = "";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        logoData = reader.result;
+        document.getElementById("logoPreview").textContent =
+            "New logo selected: " + file.name;
+    };
+
+    reader.onerror = () => alert("Logo could not be read.");
+
+    reader.readAsDataURL(file);
+});
+
+function saveSettings() {
+    if (!isAdmin) return;
+
+    const name = document.getElementById("siteNameInput").value.trim();
+
+    if (!name) {
+        alert("Please enter a website name.");
+        return;
+    }
+
+    const previous = settings;
+
+    settings = {
+        name,
+        logo: logoData
+    };
+
+    if (!saveSettingsData()) {
+        settings = previous;
+        return;
+    }
+
+    applySettings();
+    closeModal("settingsModal");
+
+    alert("Website settings saved!");
+}
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+applySettings();
+updateHeader();
+renderChapters();
+</script>
+
+</body>
+</html>
+```
